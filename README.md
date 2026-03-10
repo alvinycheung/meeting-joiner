@@ -1,12 +1,12 @@
 # Meeting Auto-Joiner
 
-Automatically opens Zoom and Google Meet links when your meetings are about to start. Runs as a lightweight macOS background service.
+Automatically opens Zoom, Google Meet, and Microsoft Teams links when your meetings are about to start. Runs as a lightweight macOS background service.
 
 ## How it works
 
 - Reads events from macOS Calendar via [icalBuddy](https://hasseg.org/icalBuddy/)
 - Checks every 5 minutes for upcoming meetings
-- Opens Zoom/Google Meet links ~5 minutes before start
+- Opens Zoom/Google Meet/MS Teams links ~5 minutes before start
 - Tracks opened meetings to avoid duplicates
 - Shows as "MeetingJoiner" in Activity Monitor
 
@@ -22,7 +22,7 @@ Works with any calendar synced to macOS Calendar (Google, Outlook, iCloud, etc.)
 ## Install
 
 ```bash
-git clone https://github.com/dotfundavid/meeting-joiner.git
+git clone https://github.com/alvinycheung/meeting-joiner.git
 cd meeting-joiner
 bash install.sh
 ```
@@ -72,6 +72,7 @@ Environment variables in the launchd plist or script:
 
 - Zoom (`zoom.us/j/...`)
 - Google Meet (`meet.google.com/...`)
+- Microsoft Teams (`teams.microsoft.com/l/meetup-join/...`)
 
 ## License
 

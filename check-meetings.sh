@@ -1,5 +1,5 @@
 #!/bin/bash
-# Meeting Auto-Joiner — opens Zoom/Google Meet links before meetings start
+# Meeting Auto-Joiner — opens Zoom/Google Meet/MS Teams links before meetings start
 
 DIR="$HOME/.claude/meeting-joiner"
 STATE="$DIR/opened.txt"
@@ -70,6 +70,9 @@ process_event() {
 
     # Fall back to Google Meet URL
     [[ -z "$url" ]] && url=$(echo "$block" | grep -oE 'https://meet\.google\.com/[a-z]+-[a-z]+-[a-z]+' | head -1)
+
+    # Fall back to MS Teams URL
+    [[ -z "$url" ]] && url=$(echo "$block" | grep -oE 'https://teams\.microsoft\.com/l/meetup-join/[^ ")<>]+' | head -1)
 
     [[ -z "$url" ]] && return
 
