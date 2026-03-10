@@ -1,0 +1,10 @@
+# Runtime files (generated during use)
+events-cache.txt
+opened.txt
+joiner.log
+launchd-stdout.log
+launchd-stderr.log
+*.tmp
+
+# macOS
+.DS_Store
