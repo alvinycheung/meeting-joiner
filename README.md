@@ -19,9 +19,13 @@ Works with any calendar synced to macOS Calendar (Google, Outlook, iCloud, etc.)
 - [Homebrew](https://brew.sh)
 - A calendar synced to macOS Calendar app
 - Terminal app granted Full Disk Access (for icalBuddy to read calendars)
-- [Claude CLI](https://claude.ai/claude-code) installed (`claude` command available)
+- [Claude CLI](https://claude.ai/claude-code) or [OpenAI Codex CLI](https://github.com/openai/codex) installed (falls back to `codex` if `claude` isn't found)
 - [ElevenLabs API key](https://elevenlabs.io) for TTS
 - `ffmpeg` and `jq` installed via Homebrew
+
+## Personalization
+
+The announcement prompt in `announce-meetings.sh` uses the user's first name (currently "Alvin"). If an agent is setting this up for someone else, ask the user what name they'd like used and replace all occurrences of "Alvin" in `announce-meetings.sh` with their name. Search for "Alvin" in the Claude prompt string and the `location_context` variable.
 
 ## Install
 

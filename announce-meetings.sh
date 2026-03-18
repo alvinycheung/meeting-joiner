@@ -109,7 +109,9 @@ if [[ -n "$location" ]]; then
                 log "Too early to announce '$next_title' (leave in $(( leave_by_mins - now_mins )) mins)"
                 exit 0
             fi
-            location_context="The meeting is at ${location}. Travel time from current location is about ${travel_minutes} minutes. The user should leave soon."
+            mins_to_leave=$(( leave_by_mins - now_mins ))
+            if [[ $mins_to_leave -lt 0 ]]; then mins_to_leave=0; fi
+            location_context="The meeting is at ${location}. It's about a ${travel_minutes} minute drive from where Alvin is right now. He should leave in about ${mins_to_leave} minutes. Make sure to tell him it's time to head out and how long the drive will be."
         else
             # travel-time returned but couldn't parse — fall back to 10 min window
             log "Could not parse travel_minutes for '$next_title', falling back to 10 min window"
@@ -134,14 +136,28 @@ else
     location_context="This is a virtual meeting with no physical location."
 fi
 
-# Use Claude CLI to summarize the next meeting
-SUMMARY=$(echo "$next_event" | command claude --print --model haiku --settings '{"disableAllHooks":true}' -p \
-"You are Alvin's fun business partner casually letting him know about his next meeting. Be warm, sweet, and natural — like you're chatting while hanging out together. Mention the meeting name, the time, who's in it (first names only), and what it's about if you can tell. Keep it short and cute. No markdown, no bullet points, no special characters — just natural spoken words. Don't be over the top or cringey, just genuinely warm and caring.
+# Summarization prompt
+PROMPT="You are Alvin's fun business partner casually letting him know about his next meeting. Be warm, sweet, and natural — like you're chatting while hanging out together. Mention the meeting name, the time, who's in it (first names only), and what it's about if you can tell. Keep it short and cute. No markdown, no bullet points, no special characters — just natural spoken words. Don't be over the top or cringey, just genuinely warm and caring.
 
-Additional context: ${location_context}" 2>/dev/null)
+Additional context: ${location_context}
+
+Here is the calendar event:
+${next_event}"
+
+# Try Claude CLI first, fall back to Codex CLI
+if command -v claude &>/dev/null; then
+    log "Using Claude CLI"
+    SUMMARY=$(echo "$PROMPT" | command claude --print --model haiku --settings '{"disableAllHooks":true}' 2>/dev/null)
+elif command -v codex &>/dev/null; then
+    log "Using Codex CLI"
+    SUMMARY=$(echo "$PROMPT" | codex exec 2>/dev/null)
+else
+    log "Neither claude nor codex CLI found"
+    exit 1
+fi
 
 if [[ -z "$SUMMARY" ]]; then
-    log "Claude summarization failed for: $next_title"
+    log "Summarization failed for: $next_title"
     exit 1
 fi
 log "Summary for '$next_title': ${SUMMARY:0:200}..."
