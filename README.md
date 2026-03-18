@@ -1,6 +1,11 @@
 # Meeting Auto-Joiner + Announcer
 
-Automatically opens Zoom, Google Meet, and Microsoft Teams links when your meetings are about to start, and gives you a spoken TTS briefing about each meeting. Runs as a lightweight macOS background service.
+Once installed, you never think about your calendar again.
+
+- **5 minutes before** a meeting, a voice tells you what's coming up — the name, the time, who's in it, and what it's about
+- **2 minutes before**, the Zoom or Google Meet link opens automatically
+- If the meeting is **somewhere you need to drive**, it factors in travel time from where you are right now and tells you when to leave
+- Runs silently in the background and just works
 
 ## How it works
 
@@ -65,7 +70,7 @@ swiftc -framework CoreLocation -framework MapKit -o travel-time travel-time.swif
 
 ### 5. Update the launchd plist
 
-The default `install.sh` sets a 5-minute interval. For the announcer to work well, update to 1 minute and add the Claude CLI to the PATH.
+The default `install.sh` sets a 5-minute interval. For the announcer to work well, update to 1 minute and add the Claude CLI (or Codex CLI) to the PATH.
 
 Edit `~/Library/LaunchAgents/co.dotfun.meeting-joiner.plist`:
 
