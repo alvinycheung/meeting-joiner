@@ -7,7 +7,7 @@ LOG="$DIR/joiner.log"
 CACHE="$DIR/events-cache.txt"
 ICALBUDDY="${ICALBUDDY_PATH:-/opt/homebrew/bin/icalBuddy}"
 CACHE_MAX_AGE="${CACHE_MAX_AGE:-300}"  # refresh icalBuddy cache every 5 min
-LEAD_TIME="${LEAD_TIME:-5}"  # minutes before meeting to open link
+LEAD_TIME="${LEAD_TIME:-2}"  # minutes before meeting to open link
 
 mkdir -p "$DIR"
 touch "$STATE"

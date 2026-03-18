@@ -1,10 +1,14 @@
 # Runtime files (generated during use)
 events-cache.txt
 opened.txt
+announced.txt
 joiner.log
 launchd-stdout.log
 launchd-stderr.log
 *.tmp
+
+# Compiled binary
+travel-time
 
 # macOS
 .DS_Store
